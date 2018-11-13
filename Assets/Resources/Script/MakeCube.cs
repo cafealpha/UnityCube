@@ -10,16 +10,29 @@ public class MakeCube : MonoBehaviour {
     {
         //버텍스 정의
         CUSTOM_VERTEX[] vt ={
-            new CUSTOM_VERTEX(-1f, 1f, 1f, new Color(1,1,0,0)),
-            new CUSTOM_VERTEX(1f,1f,1f, new Color(1,0,1,0)),
-            new CUSTOM_VERTEX(1f,1f,-1f, new Color(1,0,0,1)),
-            new CUSTOM_VERTEX(-1f,1f,-1f, new Color(1,1,1,0)),
+            new CUSTOM_VERTEX(-1f, 1f, 1f, new Color(1,0,1,1)),
+            new CUSTOM_VERTEX(1f,1f,1f, new Color(0,1,0,1)),
+            new CUSTOM_VERTEX(1f,1f,-1f, new Color(0,0,1,1)),
+            new CUSTOM_VERTEX(-1f,1f,-1f, new Color(1,1,0,1)),
 
-            new CUSTOM_VERTEX(-1f,-1f,1f, new Color(1,0,1,1)),
-            new CUSTOM_VERTEX(1f,-1f,1f, new Color(1,1,0,1)),
-            new CUSTOM_VERTEX(1f,-1f,-1f, new Color(1,0,0,0)),
-            new CUSTOM_VERTEX(-1f,-1f,-1f, new Color(1,1,1,1)),
+            new CUSTOM_VERTEX(-1f,-1f,1f, new Color(1,0,0,1)),
+            new CUSTOM_VERTEX(1f,-1f,1f, new Color(0,1,0,1)),
+            new CUSTOM_VERTEX(1f,-1f,-1f, new Color(0,0,1,1)),
+            new CUSTOM_VERTEX(-1f,-1f,-1f, new Color(1,0,0,1)),
         };
+        //uv 세팅
+        Vector2[] uv = new Vector2[vt.Length];
+        uv[0] = new Vector2(0, 1); //0,1,2
+        uv[1] = new Vector2(1, 1);
+        uv[2] = new Vector2(1, 0);
+        uv[3] = new Vector2(0, 0); //0,2,3
+
+        uv[4] = new Vector2(0, 1);
+        uv[5] = new Vector2(1, 1);
+        uv[6] = new Vector2(1, 0); //0,1,2
+        uv[7] = new Vector2(0, 0);
+
+
 
         //큐브를 만들때는 인덱스를 사용한다.12개의 면
         int[] triangles =
@@ -45,7 +58,7 @@ public class MakeCube : MonoBehaviour {
         Color[] vc = new Color[vt.Length];
         for (int i = 0; i < vt.Length; i++)
         {
-            vc[i] = vt[triangles[i]]._color;
+            vc[i] = vt[i]._color;
         }
 
 
@@ -56,13 +69,7 @@ public class MakeCube : MonoBehaviour {
         //    nl[i] = new Vector3(vt[i]._nx, vt[i]._ny, vt[i]._nz);
         //}
 
-        ////uv 세팅
-        //Vector2[] uv = new Vector2[vt.Length];
-        //for (int i = 0; i < vt.Length; i++)
-        //{
-        //    //유니티의 UV좌표는 dx와 세로가 반대로 이루어지므로 -로 뒤집어주어야 한다.
-        //    uv[i] = new Vector2(vt[i]._u, -vt[i]._v);
-        //}
+
 
         ////텍스쳐 로드
         //tex = null;
@@ -74,7 +81,8 @@ public class MakeCube : MonoBehaviour {
         mesh.triangles = triangles;
         mesh.colors = vc;
         //mesh.normals = nl;
-        //mesh.uv = uv;
+        mesh.uv = uv;
+
 
         mesh.RecalculateNormals();
 
